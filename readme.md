@@ -17,6 +17,8 @@ What's different than other typewriter plugins for jQuery?
 - parses HTML tags
 - can append to existing text in a DOM element
 
+Example:
+
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="jquery.jtype.js"></script>
 
