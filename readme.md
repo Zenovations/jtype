@@ -2,6 +2,11 @@
 jType Typing Simulator
 ======================
 
+See it in Action
+----------------
+
+[demo on home page](https://katowulf.github.com/jtype)
+
 How it Works
 ------------
 
@@ -10,8 +15,6 @@ What's different than other typewriter plugins for jQuery?
 - looks more natural and real
 - parses HTML tags
 - can append to existing text in a DOM element
-
-Usage Example: (see also, [test.html](https://github.com/katowulf/jtype/blob/master/test.html))
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="jquery.jtype.js"></script>
