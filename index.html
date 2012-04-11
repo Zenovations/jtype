@@ -1,56 +1,58 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-      "http://www.w3.org/TR/html4/loose.dtd">
+        "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-   <title>jQuery Typewriter Example</title>
+    <title>jQuery Typewriter Example</title>
 
-   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-   <script type="text/javascript" src="jquery.jtype.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.jtype.js"></script>
 
-   <script type="text/javascript">
-      jQuery(function($) { //onready
+    <script type="text/javascript">
+        jQuery(function($) { //onready
 
-         var txt = 'it was the worst of times,<br>';
-         var pauses = {};
-         pauses[txt.length] = 1000; // pause after this line is typed
+            var txt = 'it was the worst of times,<br>';
+            var pauses = {};
+            pauses[txt.length] = 1000; // pause after this line is typed
 
-         txt += 'it was the age of wisdom,<br />it was the age of foolishness,<br />it was the epoch of belief,<br />it was the epoch of incredulity,<br />it was the season of Light,<br />it was the season of Darkness,<br />it was the spring of hope,<br />it was the winter of despair,</blockquote><p>We had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way--in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.</p><p>There were a king with a large jaw and a queen with a plain face, on the throne of England; there were a king with a large jaw and a queen with a fair face, on the throne of France. In both countries it was clearer than crystal to the lords of the State preserves of loaves and fishes, that things in general were settled for ever.</p>';
+            txt += 'it was the age of wisdom,<br />it was the age of foolishness,<br />it was the epoch of belief,<br />it was the epoch of incredulity,<br />it was the season of Light,<br />it was the season of Darkness,<br />it was the spring of hope,<br />it was the winter of despair,</blockquote><p>We had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way--in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.</p><p>There were a king with a large jaw and a queen with a plain face, on the throne of England; there were a king with a large jaw and a queen with a fair face, on the throne of France. In both countries it was clearer than crystal to the lords of the State preserves of loaves and fishes, that things in general were settled for ever.</p>';
 
-         var opts = { pause: pauses };
-         $('#out').jtype(txt, opts);
+            var opts = { pause: pauses };
+            $('#out').jtype(txt, opts);
 
-      });
-   </script>
+        });
+    </script>
 
-   <style type="text/css">
-      body {
-         background-color: #eee;
-      }
+    <style type="text/css">
+        body {
+            background-color: #eee;
+        }
 
-      #out {
-         background-color: #fff;
-         font-size: 1.5em;
-         line-height: 1.5;
-         padding: 10px;
-      }
+        #out {
+            background-color: #fff;
+            font-size: 1.5em;
+            line-height: 1.5;
+            padding: 10px;
+        }
 
-      #out span.prompt {
-         background-color: black;
-         margin-left: 5px;
-         padding: 0 2px;
-      }
+        #out span.prompt {
+            background-color: black;
+            margin-left: 5px;
+            padding: 0 2px;
+        }
 
-      p {
-         text-indent: 3em;
-      }
+        p {
+            text-indent: 3em;
+        }
 
-      blockquote {
-         line-height: 1;
-      }
-   </style>
+        blockquote {
+            line-height: 1;
+        }
+    </style>
 
 </head>
 <body>
+
+<a href="http://github.com/katowulf/jtype"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/abad93f42020b733148435e2cd92ce15c542d320/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a>
 
 <div id='out'>It was the best of times, </div>
 
