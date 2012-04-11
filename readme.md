@@ -6,10 +6,10 @@ How it Works
 ------------
 
 What's different than other typewriter plugins for jQuery?
-   - simulates keyboard errors and variations in speed
-   - looks more natural and real
-   - parses HTML tags
-   - can append to existing text in a DOM element
+- simulates keyboard errors and variations in speed
+- looks more natural and real
+- parses HTML tags
+- can append to existing text in a DOM element
 
 Usage Example: (see also, example.html)
 
@@ -29,13 +29,13 @@ Configuration
 -------------
 
 The configuration options are:
-   - `speed`: in miliseconds, how quickly the characters are typed
-   - `variance`: a random variance (added to speed)
-   - `startDelay`: how long to wait after jtype() is called before the animation begins
-   - `pause`:
-   - `errPercent`: how frequently errors occur (0=disable)
-   - `errSpeed`: how quickly errors are deleted
-   - `prompt`:
+- `speed`: in miliseconds, how quickly the characters are typed
+- `variance`: a random variance (added to speed)
+- `startDelay`: how long to wait after jtype() is called before the animation begins
+- `pause`:
+- `errPercent`: how frequently errors occur (0=disable)
+- `errSpeed`: how quickly errors are deleted
+- `prompt`:
 
 There are two methods to configure the behavior. Globally, by modifying `jQuery.fn.typewriter.defaultOpts`, which affects
 all calls to `$.fn.jtype`, or by passing a hash to the call, which affects only that specific invocation:
