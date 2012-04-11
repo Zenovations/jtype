@@ -32,24 +32,25 @@
       this.left     = opts.text;
       this.tag      = '';
       this.errs     = '';
+      this.pos      = 0;
       this.opts.out.append(this.opts.prompt);
       setTimeout(_fx(this, this.consume), opts.startDelay);
    }
 
    Typewriter.prototype.consume = function() {
       this.opts.out.html(this.text());
-      if( this.left ) {
+      if( this.left || this.errs ) {
          setTimeout(_fx(this, this.consume), this.delay());
       }
    };
 
    Typewriter.prototype.delay = function() {
-      var opts = this.opts, speed = opts.speed, vary = opts.variance, pause = opts.pause, pos = this.curr.length,
+      var opts = this.opts, speed = opts.speed, vary = opts.variance, pause = opts.pause, pos = this.pos,
             p = pause && pause.hasOwnProperty(pos)? pause[pos] : 0;
       // errors trend to a larger variance when typing as it requires finger travel and mental adjustment
-      if( !p && this.errs ) { p = opts.errSpeed; }
+      if( this.errs ) { p = opts.errSpeed; }
       // if there is a pause specified, use it, if not, use a random variance on the speed
-      return p || speed+_rand(vary);
+      return p || speed+_rand(vary); //todo make the variance prefer smaller adjustments
    };
 
    Typewriter.prototype.text = function() {
@@ -63,6 +64,7 @@
             this.eatTags();
             this.curr += this.left.substr(0,1);
             this.left = this.left.substr(1);
+            this.pos++;
          }
       }
       return this.curr+this.errs+this.opts.prompt+this.tag;
@@ -70,22 +72,28 @@
 
    Typewriter.prototype.eatTags = function() {
       var left = this.left, pos;
-      if(left.substr(0, 1) == '<') {
+      while(left && left.substr(0, 1) == '<') {
          this.tag = ''; //reset current temporary closer
 
          // fetch the whole tag
          var tag = left.substr(0, left.indexOf('>')+1);
          pos = tag.length;
 
-         this.curr += this.left.substr(0, pos);
-         this.left = this.left.substr(pos);
+         if( pos && tag ) {
+            this.curr += left.substr(0, pos);
+            this.left  = left = left.substr(pos);
+            this.pos  += pos;
 
-         if( !tag.match(/^<(\/|br\b)/i) ) {
-            var html = /^<[a-z]+/i.exec(tag);
-            if(html !== null) {
-               html = html[0].replace('<', '</') + '>';
-               this.tag = html;
+            if( !tag.match(/^<(\/|br\b)/i) ) {
+               var html = /^<[a-z]+/i.exec(tag);
+               if(html !== null) {
+                  html = html[0].replace('<', '</') + '>';
+                  this.tag = html;
+               }
             }
+         }
+         else {
+            break;
          }
       }
    };

@@ -39,7 +39,7 @@ The configuration options are:
 - `speed`: in miliseconds, how quickly the characters are typed
 - `variance`: a random variance (added to speed)
 - `startDelay`: how long to wait after jtype() is called before the animation begins
-- `pause`:
+- `pause`: a hash containing coords at which to pause, with values in milliseconds; don't pause in or between html tags
 - `errPercent`: how frequently errors occur (0=disable)
 - `errSpeed`: how quickly errors are deleted
 - `prompt`:
