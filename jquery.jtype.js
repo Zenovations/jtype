@@ -12,6 +12,7 @@
    jQuery.fn.jtype = function(text, opts) {
       var $out = $(this);
       new Typewriter($.extend({}, jQuery.fn.jtype.defaultOpts, opts, {out: $out, start: $out.html(), text: text}));
+      return this;
    };
 
    // add defaults to global scope so they can be overridden by hack-happy developers
@@ -24,7 +25,6 @@
       errSpeed:    200,
       prompt:    '<span class="prompt">&nbsp;</span>'
    };
-
 
    function Typewriter(opts) {
       this.opts     = opts;
