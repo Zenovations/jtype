@@ -11,36 +11,74 @@
     */
    jQuery.fn.jtype = function(text, opts) {
       var $out = $(this);
-      new Typewriter($.extend({}, jQuery.fn.jtype.defaultOpts, opts, {out: $out, start: $out.html(), text: text}));
+
+      if( $out.data('jtype-abort') ) { $out.data('jtype-abort')(); }
+
+      var tw = new Typewriter($.extend({}, jQuery.fn.jtype.defaultOpts, opts, {out: $out, text: text}));
+      $out.data('jtype-abort', function() {
+         tw.end.call(tw);
+      });
+
       return this;
    };
 
    // add defaults to global scope so they can be overridden by hack-happy developers
    jQuery.fn.jtype.defaultOpts = {
-      speed:        30,
-      variance:     80,
-      startDelay: 2000,
-      pause:      null,
-      errPercent:    3,
-      errSpeed:    200,
-      prompt:    '<span class="prompt">&nbsp;</span>'
+      speed:          30,
+      variance:       80,
+      startDelay:      0,
+      pause:        null,
+      errPercent:      3,
+      errSpeed:      200,
+      hide:        false, // false = don't hide, any integer = fade out in this many milliseconds
+      prompt:     '<span class="prompt">&nbsp;</span>',
+      complete:     null
+//todo      text:     'format', // format=replace <div|p|br|blockquote> with \n, strip=remove html, escape=print the html
+//todo      html:       'keep'  // keep=allow the html, strip=remove the html, escape=show the html
    };
 
    function Typewriter(opts) {
       this.opts     = opts;
-      this.curr     = opts.start;
-      this.left     = opts.text;
       this.tag      = '';
       this.errs     = '';
       this.pos      = 0;
-      this.opts.out.append(this.opts.prompt);
-      setTimeout(_fx(this, this.consume), opts.startDelay);
+      this.input    = this.opts.out.is(':input');
+      this.prompt   = null;
+      this.opts.start = this.input? opts.out.val() : opts.out.html();
+      this.curr     = opts.start;
+      this.left     = opts.text;
+      if( this.input ) {
+         // focus on input fields to create a prompt
+         this.opts.out.focus();
+      }
+      else {
+         // don't append a visual prompt to input fields
+         this.prompt = $(opts.prompt).appendTo(this.opts.out);
+      }
+      this.timer = setTimeout(_fx(this, this.consume), opts.startDelay);
    }
 
    Typewriter.prototype.consume = function() {
-      this.opts.out.html(this.text());
+      if( this.input ) {
+         this.opts.out.val(this.text());
+         //this.opts.out.focus();
+      }
+      else {
+         this.prompt.detach();
+         this.opts.out.html(this.text());
+         if( this.tag ) {
+            this.opts.out.find(this.tag.substring(2, this.tag.length-1)).last().append(this.prompt);
+         }
+         else {
+            this.opts.out.append(this.prompt);
+         }
+      }
+
       if( this.left || this.errs ) {
-         setTimeout(_fx(this, this.consume), this.delay());
+         this.timer = setTimeout(_fx(this, this.consume), this.delay());
+      }
+      else {
+         this.end();
       }
    };
 
@@ -67,7 +105,7 @@
             this.pos++;
          }
       }
-      return this.curr+this.errs+this.opts.prompt+this.tag;
+      return this.curr+this.errs+this.tag;
    };
 
    Typewriter.prototype.eatTags = function() {
@@ -84,7 +122,8 @@
             this.left  = left = left.substr(pos);
             this.pos  += pos;
 
-            if( !tag.match(/^<(\/|br\b)/i) ) {
+            if( !tag.match(/^<(\/|br\b|input)/i) ) {
+               // if this isn't a closing tag, <br />, or <input ...> then add a closing tag temporarily
                var html = /^<[a-z]+/i.exec(tag);
                if(html !== null) {
                   html = html[0].replace('<', '</') + '>';
@@ -96,6 +135,29 @@
             break;
          }
       }
+   };
+
+   Typewriter.prototype.end = function() {
+      if( this.timer ) {
+         clearTimeout(this.timer);
+      }
+
+      if( this.left ) {
+         this.curr += this.left;
+         this.left = '';
+         this.opts.out.html(this.curr);
+         if( this.prompt ) {this.opts.out.append(this.prompt);}
+      }
+
+      if( this.prompt && this.opts.hide !== false ) {
+         this.prompt.fadeOut(this.opts.hide);
+      }
+
+      if( this.opts.complete ) {
+         this.opts.complete.call(this.opts.out[0]);
+      }
+
+      this.opts.out.removeData('jtype-abort');
    };
 
    function _errs(errPercent) {
