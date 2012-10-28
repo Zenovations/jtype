@@ -5,7 +5,7 @@ jType Typing Simulator
 See it in Action
 ----------------
 
-[demo on home page](https://katowulf.github.com/jtype)
+[demo page](https://zenovations.github.com/jtype)
 
 How it Works
 ------------
